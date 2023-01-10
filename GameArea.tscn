@@ -1,0 +1,549 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Assets/mail/Mail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/ui/level_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://GameArea.gd" type="Script" id=3]
+[ext_resource path="res://Assets/audio/music.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Assets/ui/ScoreBoard.png" type="Texture" id=5]
+[ext_resource path="res://Assets/ui/font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Assets/background/background.png" type="Texture" id=7]
+[ext_resource path="res://Assets/ui/title_font.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Assets/ui/subtitle_font.tres" type="DynamicFont" id=9]
+[ext_resource path="res://MainMenu.gd" type="Script" id=10]
+[ext_resource path="res://Assets/background/spam_highlight.png" type="Texture" id=11]
+[ext_resource path="res://CustomConfig.gd" type="Script" id=12]
+
+[node name="GameArea" type="Node2D"]
+z_index = 10
+z_as_relative = false
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 320.0 ],
+"_edit_vertical_guides_": [ 75.0, 565.0, 640.0 ]
+}
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 320, 160 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+
+[node name="ScoreBoard" type="Sprite" parent="."]
+position = Vector2( 320, 30 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 5 )
+vframes = 4
+
+[node name="Mail" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 82, 277 )
+
+[node name="Hud" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Level" type="Label" parent="Hud"]
+margin_left = 382.0
+margin_top = 15.0
+margin_right = 400.0
+margin_bottom = 53.0
+rect_pivot_offset = Vector2( 29, 4 )
+custom_fonts/font = ExtResource( 2 )
+text = "1"
+align = 2
+valign = 1
+uppercase = true
+
+[node name="Filtered" type="Label" parent="Hud"]
+margin_left = 315.0
+margin_top = 18.0
+margin_right = 361.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( 29, 4 )
+custom_fonts/font = ExtResource( 6 )
+text = "0/0"
+align = 2
+uppercase = true
+
+[node name="Processed" type="Label" parent="Hud"]
+margin_left = 315.0
+margin_top = 32.0
+margin_right = 361.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 29, 4 )
+custom_fonts/font = ExtResource( 6 )
+text = "0/0"
+align = 2
+uppercase = true
+
+[node name="ProcessedLabel" type="Label" parent="Hud"]
+margin_left = 231.0
+margin_top = 32.0
+margin_right = 325.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 29, 5 )
+custom_fonts/font = ExtResource( 6 )
+text = "Processed:"
+uppercase = true
+
+[node name="FilteredLabel" type="Label" parent="Hud"]
+margin_left = 231.0
+margin_top = 18.0
+margin_right = 330.0
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 6 )
+text = "Spam Filtered:"
+uppercase = true
+
+[node name="MainMenu" type="MarginContainer" parent="."]
+margin_top = 1.0
+margin_right = 640.0
+margin_bottom = 320.0
+script = ExtResource( 10 )
+
+[node name="Panel" type="Panel" parent="MainMenu"]
+margin_right = 640.0
+margin_bottom = 319.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 200.0
+margin_right = -200.0
+margin_bottom = 1.0
+alignment = 1
+
+[node name="Title" type="Label" parent="MainMenu/Panel/VBoxContainer"]
+margin_top = 111.0
+margin_right = 240.0
+margin_bottom = 141.0
+custom_fonts/font = ExtResource( 8 )
+text = "Spam Destroyer"
+align = 1
+uppercase = true
+
+[node name="Subtitle" type="Label" parent="MainMenu/Panel/VBoxContainer"]
+margin_top = 145.0
+margin_right = 240.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 9 )
+text = "Clear the web of spam emails"
+align = 1
+uppercase = true
+
+[node name="StartGame" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+margin_top = 164.0
+margin_right = 240.0
+margin_bottom = 184.0
+rect_pivot_offset = Vector2( 0, 10 )
+size_flags_stretch_ratio = 0.47
+text = "Start"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/Panel/VBoxContainer"]
+margin_top = 188.0
+margin_right = 240.0
+margin_bottom = 208.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LevelSelect" type="Button" parent="MainMenu/Panel/VBoxContainer/HBoxContainer"]
+margin_right = 118.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Level Select"
+
+[node name="CustomGame" type="Button" parent="MainMenu/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 122.0
+margin_right = 240.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Customize"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+margin_top = 208.0
+margin_right = 240.0
+margin_bottom = 212.0
+
+[node name="LevelSelect" type="HBoxContainer" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+margin_top = 200.0
+margin_right = 240.0
+margin_bottom = 220.0
+
+[node name="Level1" type="Button" parent="MainMenu/Panel/VBoxContainer/LevelSelect"]
+margin_right = 44.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="MainMenu/Panel/VBoxContainer/LevelSelect"]
+margin_left = 48.0
+margin_right = 93.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="MainMenu/Panel/VBoxContainer/LevelSelect"]
+margin_left = 97.0
+margin_right = 142.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="MainMenu/Panel/VBoxContainer/LevelSelect"]
+margin_left = 146.0
+margin_right = 191.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="MainMenu/Panel/VBoxContainer/LevelSelect"]
+margin_left = 195.0
+margin_right = 240.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "5"
+
+[node name="CustomConfig" type="GridContainer" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+margin_top = 172.0
+margin_right = 240.0
+margin_bottom = 248.0
+columns = 3
+script = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_top = 1.0
+margin_right = 63.0
+margin_bottom = 15.0
+text = "Senders:"
+
+[node name="Senders" type="HSlider" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 67.0
+margin_right = 216.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+tick_count = 4
+ticks_on_borders = true
+
+[node name="ValueSender" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 220.0
+margin_top = 1.0
+margin_right = 240.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 20, 0 )
+text = "1"
+align = 2
+
+[node name="Label3" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_top = 21.0
+margin_right = 63.0
+margin_bottom = 35.0
+text = "Rate"
+
+[node name="Rate" type="HSlider" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 67.0
+margin_top = 20.0
+margin_right = 216.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="ValueRate" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 220.0
+margin_top = 21.0
+margin_right = 240.0
+margin_bottom = 35.0
+text = "1"
+align = 2
+
+[node name="Label2" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_top = 41.0
+margin_right = 63.0
+margin_bottom = 55.0
+text = "Receivers"
+
+[node name="Receivers" type="HSlider" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 67.0
+margin_top = 40.0
+margin_right = 216.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+tick_count = 4
+ticks_on_borders = true
+
+[node name="ValueReceivers" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 220.0
+margin_top = 41.0
+margin_right = 240.0
+margin_bottom = 55.0
+text = "1"
+align = 2
+
+[node name="Label4" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_top = 61.0
+margin_right = 63.0
+margin_bottom = 75.0
+text = "Messages"
+
+[node name="Messages" type="HSlider" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 67.0
+margin_top = 60.0
+margin_right = 216.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+min_value = 10.0
+max_value = 60.0
+step = 5.0
+value = 10.0
+tick_count = 6
+ticks_on_borders = true
+
+[node name="ValueMessages" type="Label" parent="MainMenu/Panel/VBoxContainer/CustomConfig"]
+margin_left = 220.0
+margin_top = 61.0
+margin_right = 240.0
+margin_bottom = 75.0
+text = "10"
+align = 2
+
+[node name="Spam" type="Control" parent="MainMenu/Panel"]
+
+[node name="SpamHighlight" type="Sprite" parent="MainMenu/Panel/Spam"]
+position = Vector2( 506, 157 )
+texture = ExtResource( 11 )
+
+[node name="Spam" type="Label" parent="MainMenu/Panel/Spam"]
+margin_left = 489.0
+margin_top = 135.0
+margin_right = 523.0
+margin_bottom = 183.0
+rect_pivot_offset = Vector2( 32, 17 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "Click
+
+Spam"
+align = 1
+valign = 1
+
+[node name="Mail" parent="MainMenu/Panel/Spam" instance=ExtResource( 1 )]
+position = Vector2( 505, 158 )
+
+[node name="LevelOver" type="MarginContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 180.0
+margin_top = 90.0
+margin_right = 430.0
+margin_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LevelOver"]
+margin_right = 250.0
+margin_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelOver/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -94.0
+margin_top = -59.0
+margin_right = 94.0
+margin_bottom = 59.0
+
+[node name="GridContainer" type="GridContainer" parent="LevelOver/Panel/VBoxContainer"]
+margin_right = 188.0
+margin_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Label" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_right = 66.0
+margin_bottom = 14.0
+
+[node name="HeaderSpam" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_right = 129.0
+margin_bottom = 14.0
+text = "     Spam"
+align = 1
+
+[node name="HeaderLegit" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_right = 188.0
+margin_bottom = 14.0
+text = "      Legit"
+align = 1
+
+[node name="RowSent" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_top = 18.0
+margin_right = 66.0
+margin_bottom = 32.0
+text = "Sent"
+
+[node name="SpamSent" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_top = 18.0
+margin_right = 129.0
+margin_bottom = 32.0
+text = "0"
+align = 2
+
+[node name="LegitSent" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_top = 18.0
+margin_right = 188.0
+margin_bottom = 32.0
+text = "0"
+align = 2
+
+[node name="RowDestroyed" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_top = 36.0
+margin_right = 66.0
+margin_bottom = 50.0
+text = "Destroyed"
+
+[node name="BurnedSpam" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_top = 36.0
+margin_right = 129.0
+margin_bottom = 50.0
+text = "0"
+align = 2
+
+[node name="BurnedLegit" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_top = 36.0
+margin_right = 188.0
+margin_bottom = 50.0
+text = "0"
+align = 2
+
+[node name="RowReceived" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_top = 54.0
+margin_right = 66.0
+margin_bottom = 68.0
+text = "Received"
+
+[node name="RecSpam" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_top = 54.0
+margin_right = 129.0
+margin_bottom = 68.0
+text = "0"
+align = 2
+
+[node name="RecLegit" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_top = 54.0
+margin_right = 188.0
+margin_bottom = 68.0
+text = "0"
+align = 2
+
+[node name="HSeparator2" type="HSeparator" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_top = 72.0
+margin_right = 66.0
+margin_bottom = 76.0
+
+[node name="HSeparator3" type="HSeparator" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_top = 72.0
+margin_right = 129.0
+margin_bottom = 76.0
+
+[node name="HSeparator" type="HSeparator" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_top = 72.0
+margin_right = 188.0
+margin_bottom = 76.0
+
+[node name="FilterSuccess" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_top = 80.0
+margin_right = 66.0
+margin_bottom = 94.0
+text = "Filter"
+align = 2
+
+[node name="empty" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 70.0
+margin_top = 80.0
+margin_right = 129.0
+margin_bottom = 94.0
+text = " Success:"
+
+[node name="SuccessRate" type="Label" parent="LevelOver/Panel/VBoxContainer/GridContainer"]
+margin_left = 133.0
+margin_top = 80.0
+margin_right = 188.0
+margin_bottom = 94.0
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelOver/Panel/VBoxContainer"]
+margin_top = 98.0
+margin_right = 188.0
+margin_bottom = 118.0
+
+[node name="Replay" type="Button" parent="LevelOver/Panel/VBoxContainer/HBoxContainer"]
+margin_right = 92.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Replay"
+
+[node name="Next" type="Button" parent="LevelOver/Panel/VBoxContainer/HBoxContainer"]
+margin_left = 96.0
+margin_right = 188.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Next Level"
+
+[node name="MainMenu" type="Button" parent="LevelOver/Panel/VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 142.0
+margin_right = 225.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Main Menu"
+
+[node name="SendTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="EffectPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[connection signal="hide" from="MainMenu" to="MainMenu" method="_on_MainMenu_hide"]
+[connection signal="toggled" from="MainMenu/Panel/VBoxContainer/HBoxContainer/LevelSelect" to="MainMenu" method="_on_LevelSelect_toggled"]
+[connection signal="toggled" from="MainMenu/Panel/VBoxContainer/HBoxContainer/CustomGame" to="MainMenu" method="_on_CustomGame_toggled"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LevelSelect/Level1" to="." method="_on_level_pressed" binds= [ 0 ]]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LevelSelect/Level2" to="." method="_on_level_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LevelSelect/Level3" to="." method="_on_level_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LevelSelect/Level4" to="." method="_on_level_pressed" binds= [ 3 ]]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LevelSelect/Level5" to="." method="_on_level_pressed" binds= [ 4 ]]
+[connection signal="value_changed" from="MainMenu/Panel/VBoxContainer/CustomConfig/Senders" to="MainMenu/Panel/VBoxContainer/CustomConfig" method="_on_Senders_value_changed"]
+[connection signal="value_changed" from="MainMenu/Panel/VBoxContainer/CustomConfig/Rate" to="MainMenu/Panel/VBoxContainer/CustomConfig" method="_on_Rate_value_changed"]
+[connection signal="value_changed" from="MainMenu/Panel/VBoxContainer/CustomConfig/Receivers" to="MainMenu/Panel/VBoxContainer/CustomConfig" method="_on_Receivers_value_changed"]
+[connection signal="value_changed" from="MainMenu/Panel/VBoxContainer/CustomConfig/Messages" to="MainMenu/Panel/VBoxContainer/CustomConfig" method="_on_Messages_value_changed"]
